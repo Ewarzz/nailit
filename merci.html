@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Merci pour ton achat — You Nailed It</title>
+<link rel="icon" type="image/png" href="favicon.png?v=3"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --rose:       #f2c4c4;
+  --rose-light: #faeaea;
+  --rose-mid:   #e8a8a8;
+  --rose-deep:  #c97070;
+  --rose-dark:  #a85050;
+  --blush:      #fdf4f4;
+  --cream:      #fffaf9;
+  --noir:       #1c1414;
+  --muted:      #7a6060;
+  --gold:       #c9a86a;
+  --white:      #ffffff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--noir);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
+a,button{cursor:pointer}
+
+/* NAV */
+nav{background:rgba(253,244,244,.96);backdrop-filter:blur(18px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:20px 64px;box-shadow:0 2px 40px rgba(201,112,112,.07)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:500;color:var(--noir);text-decoration:none;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.nav-logo span{color:var(--rose-deep);font-style:italic}
+.nav-logo-img{height:36px;width:auto}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes shimmer{0%{opacity:.4}50%{opacity:1}100%{opacity:.4}}
+
+/* MAIN */
+main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;position:relative;overflow:hidden}
+
+main::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(242,196,196,.3) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 80% 60%, rgba(201,112,112,.1) 0%, transparent 60%);
+  z-index:0;pointer-events:none;
+}
+
+.merci-wrap{position:relative;z-index:1;text-align:center;max-width:640px;width:100%}
+
+/* Icône check animée */
+.check-circle{
+  width:80px;height:80px;border-radius:50%;
+  background:var(--rose-light);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 32px;
+  animation:pop .6s cubic-bezier(.175,.885,.32,1.275) both;
+  border:2px solid var(--rose-mid);
+}
+.check-circle svg{width:36px;height:36px;color:var(--rose-deep)}
+
+.merci-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.82rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--rose-deep);margin-bottom:20px;
+  animation:fadeUp .6s ease .2s both;
+}
+.merci-tag::before{content:'';width:24px;height:1.5px;background:var(--rose-deep)}
+
+.merci-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,3.2rem);
+  font-weight:700;line-height:1.1;
+  color:var(--noir);margin-bottom:16px;
+  animation:fadeUp .6s ease .3s both;
+}
+.merci-title em{font-style:italic;color:var(--rose-deep)}
+
+.merci-sub{
+  font-size:1.1rem;font-weight:300;color:var(--muted);
+  line-height:1.8;margin-bottom:48px;
+  animation:fadeUp .6s ease .4s both;
+}
+
+/* Étapes */
+.steps{
+  display:flex;flex-direction:column;gap:16px;
+  margin-bottom:48px;text-align:left;
+  animation:fadeUp .6s ease .5s both;
+}
+.step{
+  display:flex;align-items:flex-start;gap:16px;
+  background:var(--white);
+  border:1px solid var(--rose-light);
+  padding:20px 24px;
+  transition:transform .2s,box-shadow .2s;
+}
+.step:hover{transform:translateX(4px);box-shadow:0 8px 30px rgba(201,112,112,.08)}
+.step-num{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--rose-light);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;
+  color:var(--rose-deep);flex-shrink:0;margin-top:2px;
+}
+.step-body{}
+.step-title{font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:4px}
+.step-text{font-size:.95rem;font-weight:300;color:var(--muted);line-height:1.7}
+.step-text a{color:var(--rose-deep);font-weight:500;text-decoration:none;transition:opacity .2s}
+.step-text a:hover{opacity:.7}
+
+/* CTA accès */
+.btn-acces{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--noir);color:var(--white);
+  padding:20px 52px;text-decoration:none;
+  font-size:.9rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  transition:background .3s,gap .3s,transform .2s;
+  margin-bottom:24px;
+  animation:fadeUp .6s ease .6s both;
+}
+.btn-acces:hover{background:var(--rose-deep);gap:18px;transform:translateY(-2px)}
+
+.merci-note{
+  font-size:.82rem;color:var(--muted);font-weight:300;
+  animation:fadeUp .6s ease .7s both;
+}
+.merci-note a{color:var(--rose-deep);text-decoration:none}
+
+/* Divider déco */
+.divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:48px 0 32px}
+.divider::before,.divider::after{content:'';width:80px;height:1.5px;background:var(--rose-deep);opacity:.5}
+.divider i{display:inline-block;width:8px;height:8px;background:var(--rose-deep);transform:rotate(45deg);opacity:.7}
+
+/* Footer */
+footer{background:var(--noir);padding:32px 64px;text-align:center}
+footer p{font-size:.78rem;color:rgba(255,255,255,.25)}
+footer a{color:var(--rose-mid);text-decoration:none}
+
+/* Mobile */
+@media(max-width:600px){
+  nav{padding:16px 20px;grid-template-columns:1fr}
+  .nav-logo{font-size:1.1rem}
+  main{padding:60px 20px}
+  .btn-acces{width:100%;justify-content:center;padding:18px 24px}
+  .step{padding:16px 18px}
+  footer{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img class="nav-logo-img" src="favicon.png" alt="Logo You Nailed It">
+    You <span>Nailed It</span>
+  </a>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="merci-wrap">
+
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <div class="merci-tag">Paiement confirmé</div>
+
+    <h1 class="merci-title">Bienvenue dans<br>la formation <em>You Nailed It</em> !</h1>
+
+    <p class="merci-sub">
+      Ton achat a bien été enregistré. Tu vas recevoir un email de confirmation avec ton lien d'accès à la formation. Vérifie tes spams si tu ne le vois pas dans les minutes qui suivent.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Vérifie ton email</div>
+          <p class="step-text">Un email de confirmation t'a été envoyé avec ton lien d'accès personnel à la formation.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Accède à tes vidéos</div>
+          <p class="step-text">Clique sur le lien dans l'email pour accéder à toutes tes vidéos en HD, disponibles à vie sur tous tes appareils.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Lance-toi !</div>
+          <p class="step-text">Commence dès maintenant, à ton rythme. Partage tes créations sur Instagram avec <strong style="color:var(--rose-deep)">@_she.nailed.it</strong> 💅</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="LIEN_VIMEO_ICI" class="btn-acces">Accéder à ma formation →</a>
+
+    <p class="merci-note">
+      Un problème ? Contacte Marine sur <a href="https://www.instagram.com/_she.nailed.it/" target="_blank">Instagram</a>
+    </p>
+
+    <div class="divider"><i></i></div>
+
+    <p style="font-size:.88rem;color:var(--muted);font-weight:300">
+      <a href="index.html" style="color:var(--rose-deep);text-decoration:none">← Retour au site</a>
+    </p>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 You Nailed It — Tous droits réservés · <a href="#">Mentions légales</a></p>
+</footer>
+
+</body>
+</html>
