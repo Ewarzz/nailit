@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ma Formation — You Nailed It</title>
+<link rel="icon" type="image/png" href="favicon.png?v=3"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --rose:       #f2c4c4;
+  --rose-light: #faeaea;
+  --rose-mid:   #e8a8a8;
+  --rose-deep:  #c97070;
+  --rose-dark:  #a85050;
+  --blush:      #fdf4f4;
+  --cream:      #fffaf9;
+  --noir:       #1c1414;
+  --muted:      #7a6060;
+  --gold:       #c9a86a;
+  --white:      #ffffff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--noir);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
+a,button{cursor:pointer}
+
+/* ── LOADING ── */
+#loading{
+  position:fixed;inset:0;background:var(--cream);
+  display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s;
+}
+#loading.hidden{opacity:0;pointer-events:none}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.loading-spinner{width:36px;height:36px;border:2.5px solid var(--rose-light);border-top-color:var(--rose-deep);border-radius:50%;animation:spin .8s linear infinite}
+
+/* ── NAV ── */
+nav{background:rgba(253,244,244,.96);backdrop-filter:blur(18px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:20px 64px;box-shadow:0 2px 40px rgba(201,112,112,.07);position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:500;color:var(--noir);text-decoration:none;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.nav-logo span{color:var(--rose-deep);font-style:italic}
+.nav-logo-img{height:36px;width:auto}
+.nav-center{font-size:.78rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.nav-right{display:flex;justify-content:flex-end}
+.nav-help{font-size:.8rem;font-weight:500;color:var(--rose-deep);text-decoration:none;letter-spacing:.05em;transition:opacity .2s}
+.nav-help:hover{opacity:.7}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PAGE ACCÈS REFUSÉ ── */
+.denied-wrap{
+  min-height:calc(100vh - 82px);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:80px 24px;text-align:center;position:relative;overflow:hidden;
+}
+.denied-wrap::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 20% 40%,rgba(242,196,196,.3) 0%,transparent 70%),
+             radial-gradient(ellipse 40% 50% at 80% 60%,rgba(201,112,112,.1) 0%,transparent 60%);
+  z-index:0;pointer-events:none;
+}
+.denied-inner{position:relative;z-index:1;max-width:560px}
+.denied-icon{width:80px;height:80px;border-radius:50%;background:var(--rose-light);border:2px solid var(--rose-mid);display:flex;align-items:center;justify-content:center;margin:0 auto 32px;font-size:2rem;animation:pop .6s cubic-bezier(.175,.885,.32,1.275) both}
+.denied-tag{display:inline-flex;align-items:center;gap:10px;font-size:.8rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:20px;animation:fadeUp .6s ease .2s both}
+.denied-tag::before{content:'';width:24px;height:1.5px;background:var(--rose-deep)}
+.denied-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.1;color:var(--noir);margin-bottom:16px;animation:fadeUp .6s ease .3s both}
+.denied-title em{font-style:italic;color:var(--rose-deep)}
+.denied-sub{font-size:1rem;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:40px;animation:fadeUp .6s ease .4s both}
+.btn-denied{display:inline-flex;align-items:center;gap:12px;background:var(--noir);color:var(--white);padding:18px 44px;text-decoration:none;font-size:.88rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;transition:background .3s,gap .3s,transform .2s;animation:fadeUp .6s ease .5s both}
+.btn-denied:hover{background:var(--rose-deep);gap:18px;transform:translateY(-2px)}
+
+/* ── HERO ── */
+.f-hero{padding:64px 64px 48px;position:relative;overflow:hidden;background:var(--blush);border-bottom:1px solid var(--rose-light)}
+.f-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 10% 50%,rgba(242,196,196,.25) 0%,transparent 60%),radial-gradient(ellipse 35% 60% at 90% 30%,rgba(201,112,112,.08) 0%,transparent 55%);z-index:0;pointer-events:none}
+.f-hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.f-hero-badge{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.f-hero-badge::before{content:'';width:20px;height:1.5px;background:var(--gold)}
+.f-hero-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.15;color:var(--noir);margin-bottom:12px}
+.f-hero-title em{font-style:italic;color:var(--rose-deep)}
+.f-hero-sub{font-size:.95rem;font-weight:300;color:var(--muted);line-height:1.8;max-width:480px}
+.f-pack-badge{background:var(--noir);color:var(--white);padding:24px 36px;flex-shrink:0;text-align:center}
+.fpb-label{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
+.fpb-name{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:4px}
+.fpb-access{font-size:.78rem;font-weight:300;color:rgba(255,255,255,.5)}
+
+/* ── INFO BAR ── */
+.f-infobar{background:var(--rose-light);padding:14px 64px;display:flex;gap:32px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--rose-mid)}
+.f-infobar-item{display:flex;align-items:center;gap:8px;font-size:.8rem;font-weight:500;color:var(--noir);letter-spacing:.04em}
+
+/* ── CARDS GRID ── */
+.f-cards-wrap{padding:56px 64px 0;max-width:1200px;margin:0 auto}
+.f-cards-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:500;color:var(--noir);margin-bottom:32px}
+.f-cards-title em{font-style:italic;color:var(--rose-deep)}
+.f-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:0}
+
+/* ── LEVEL CARD ── */
+.lvl-card{
+  border:1.5px solid var(--rose-light);
+  background:var(--white);
+  overflow:hidden;
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+  position:relative;
+}
+.lvl-card.unlocked{cursor:pointer}
+.lvl-card.unlocked:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(201,112,112,.12);border-color:var(--rose-mid)}
+.lvl-card.locked{opacity:.75}
+.lvl-card.active{border-color:var(--rose-deep);box-shadow:0 0 0 2px rgba(201,112,112,.15)}
+
+/* Card visual top */
+.lvl-card-top{
+  width:100%;padding-top:72%;
+  background:linear-gradient(145deg,#f5e8e8,#ede0e0);
+  position:relative;overflow:hidden;
+}
+.lvl-card-top.unlocked-bg{background:linear-gradient(145deg,var(--blush),#f0dede)}
+.lvl-card-top.locked-bg{background:linear-gradient(145deg,#ece6e6,#ddd5d5)}
+
+/* Padlock icon */
+.padlock{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-60%);
+  display:flex;flex-direction:column;align-items:center;
+}
+.padlock svg{width:52px;height:52px}
+.play-hint{
+  position:absolute;bottom:16px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:8px;
+  background:rgba(201,112,112,.9);color:var(--white);
+  padding:7px 16px;
+  font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap;
+  transition:background .2s;
+}
+.lvl-card.unlocked:hover .play-hint{background:var(--rose-dark)}
+.lvl-card.active .play-hint{background:var(--noir)}
+
+/* Card bottom label */
+.lvl-card-label{padding:18px 20px;border-top:1px solid var(--rose-light);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lcl-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--noir)}
+.lcl-num{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.lcl-arrow{font-size:.9rem;color:var(--rose-deep);transition:transform .2s}
+.lvl-card.active .lcl-arrow{transform:rotate(90deg)}
+
+/* ── PANEL DÉPLOYABLE ── */
+.level-panel{
+  display:none;
+  margin:0 64px;
+  border:1.5px solid var(--rose-deep);
+  border-top:none;
+  background:var(--white);
+  animation:slideDown .3s ease both;
+}
+.level-panel.visible{display:block}
+
+/* Panel header */
+.panel-header{
+  padding:28px 36px 24px;
+  border-bottom:1px solid var(--rose-light);
+  display:flex;align-items:center;gap:16px;
+}
+.ph-num{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--rose-deep)}
+.ph-name{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--noir)}
+.ph-count{margin-left:auto;font-size:.78rem;font-weight:500;color:var(--muted)}
+.ph-close{
+  width:32px;height:32px;border:none;background:var(--rose-light);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;color:var(--muted);transition:background .2s,color .2s;cursor:pointer;
+  flex-shrink:0;
+}
+.ph-close:hover{background:var(--rose-mid);color:var(--noir)}
+
+/* Video grid inside panel */
+.panel-videos{padding:28px 36px 36px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.video-card{background:var(--white);border:1px solid var(--rose-light);overflow:hidden;transition:transform .15s,box-shadow .15s}
+.video-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,112,112,.1)}
+.video-thumb{position:relative;width:100%;padding-top:56.25%;background:linear-gradient(145deg,#f5e8e8,#ede0e0);overflow:hidden}
+.video-thumb iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.vp-icon{font-size:2rem;opacity:.35}
+.vp-text{font-size:.72rem;font-weight:500;color:var(--muted);letter-spacing:.06em;text-align:center;padding:0 12px}
+.video-info{padding:14px 16px}
+.vi-num{font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--rose-deep);margin-bottom:3px}
+.vi-title{font-size:.92rem;font-weight:500;color:var(--noir);line-height:1.4}
+.vi-duration{font-size:.76rem;font-weight:300;color:var(--muted);margin-top:3px}
+
+/* ── SECTION LOCKED PANEL ── */
+.locked-section{
+  margin:0 64px 64px;
+  border:1.5px dashed var(--rose-mid);
+  padding:48px 40px;text-align:center;
+  background:linear-gradient(135deg,rgba(250,234,234,.3) 0%,rgba(255,250,249,.8) 100%);
+}
+.locked-icon-big{width:64px;height:64px;border-radius:50%;background:var(--rose-light);border:1.5px solid var(--rose-mid);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.6rem}
+.locked-label{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--rose-mid);margin-bottom:8px;display:flex;align-items:center;gap:10px;justify-content:center}
+.locked-label::before,.locked-label::after{content:'';flex:1;max-width:40px;height:1px;background:var(--rose-mid)}
+.locked-name{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--noir);margin-bottom:10px;line-height:1.1}
+.locked-desc{font-size:.92rem;font-weight:300;color:var(--muted);line-height:1.8;max-width:400px;margin:0 auto 28px}
+.locked-features{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
+.locked-feature{font-size:.78rem;font-weight:500;color:var(--muted);background:var(--white);border:1px solid var(--rose-light);padding:6px 14px}
+.btn-unlock{display:inline-flex;align-items:center;gap:10px;background:var(--rose-deep);color:var(--white);padding:15px 36px;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:background .3s,gap .3s,transform .2s;border:none}
+.btn-unlock:hover{background:var(--rose-dark);gap:16px;transform:translateY(-1px)}
+.locked-price{font-size:.8rem;font-weight:300;color:var(--muted);margin-top:14px}
+.locked-price strong{color:var(--noir);font-weight:600}
+.locked-price a{color:var(--rose-deep)}
+
+/* Bottom spacing */
+.f-bottom-space{height:64px}
+
+/* ── HELP BANNER ── */
+.f-help{background:var(--noir);padding:40px 64px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.fh-label{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.fh-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:500;color:var(--white);line-height:1.3}
+.fh-title em{font-style:italic;color:var(--rose-mid)}
+.btn-help{display:inline-flex;align-items:center;gap:10px;color:var(--white);text-decoration:none;font-size:.82rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,.2);padding:14px 28px;transition:border-color .3s,gap .3s;flex-shrink:0}
+.btn-help:hover{border-color:var(--rose-mid);gap:16px}
+
+/* ── FOOTER ── */
+footer{background:var(--noir);padding:32px 64px;text-align:center}
+footer p{font-size:.78rem;color:rgba(255,255,255,.25)}
+footer a{color:var(--rose-mid);text-decoration:none}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  nav{padding:16px 20px;grid-template-columns:auto 1fr}
+  .nav-center{display:none}
+  .f-hero{padding:48px 20px 40px}
+  .f-hero-inner{flex-direction:column}
+  .f-pack-badge{width:100%;padding:20px}
+  .f-infobar{padding:14px 20px;gap:16px}
+  .f-cards-wrap{padding:40px 20px 0}
+  .f-cards{grid-template-columns:1fr}
+  .level-panel{margin:0 20px}
+  .panel-header{padding:20px 20px 16px;flex-wrap:wrap}
+  .panel-videos{padding:20px 20px 24px;grid-template-columns:1fr}
+  .locked-section{margin:0 20px 40px;padding:32px 20px}
+  .f-help{padding:32px 20px}
+  footer{padding:24px 20px}
+  .f-cards-wrap{padding-bottom:0}
+}
+</style>
+</head>
+<body>
+
+<div id="loading"><div class="loading-spinner"></div></div>
+
+<!-- NAV -->
+<nav>
+  <a href="https://younaileditpro.fr" class="nav-logo">
+    <img class="nav-logo-img" src="favicon.png" alt="Logo You Nailed It">
+    You <span>Nailed It</span>
+  </a>
+  <div class="nav-center">Ma Formation</div>
+  <div class="nav-right">
+    <a href="https://www.instagram.com/_she.nailed.it/" target="_blank" class="nav-help">Aide →</a>
+  </div>
+</nav>
+
+<!-- ══ PAGE ACCÈS REFUSÉ ══ -->
+<div id="pageDenied" style="display:none">
+  <div class="denied-wrap">
+    <div class="denied-inner">
+      <div class="denied-icon">🔒</div>
+      <div class="denied-tag">Accès restreint</div>
+      <h1 class="denied-title">Cette page est<br>réservée aux <em>élèves</em></h1>
+      <p class="denied-sub">Tu dois avoir acheté une formation pour accéder au contenu. Si tu viens d'effectuer un achat, vérifie ton email pour ton lien d'accès personnalisé.</p>
+      <a href="https://younaileditpro.fr" class="btn-denied">Voir les formations →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE FORMATION ══ -->
+<main id="pageFormation" style="display:none">
+
+  <!-- Hero -->
+  <div class="f-hero">
+    <div class="f-hero-inner">
+      <div>
+        <div class="f-hero-badge">Bienvenue dans ta formation</div>
+        <h1 class="f-hero-title" id="heroTitle">Formation <em>You Nailed It</em></h1>
+        <p class="f-hero-sub">Toutes tes vidéos sont disponibles ici, à ton rythme, sur tous tes appareils. Bonne formation 💅</p>
+      </div>
+      <div class="f-pack-badge">
+        <div class="fpb-label">Ton accès</div>
+        <div class="fpb-name" id="packBadgeName">—</div>
+        <div class="fpb-access">Accès à vie garanti</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info bar -->
+  <div class="f-infobar">
+    <div class="f-infobar-item"><span>🎥</span><span>Vidéos HD</span></div>
+    <div class="f-infobar-item"><span>♾️</span><span>Accès à vie</span></div>
+    <div class="f-infobar-item"><span>📱</span><span>Tous appareils</span></div>
+    <div class="f-infobar-item"><span>🔒</span><span>Accès sécurisé</span></div>
+  </div>
+
+  <!-- ══ 3 CARDS ══ -->
+  <div class="f-cards-wrap">
+    <p class="f-cards-title">Tes <em>niveaux</em></p>
+    <div class="f-cards" id="cardsGrid">
+      <!-- injectées par JS -->
+    </div>
+  </div>
+
+  <!-- ══ PANEL DÉPLOYABLE (sous les cards) ══ -->
+  <div id="levelPanel" class="level-panel">
+    <div class="panel-header">
+      <span class="ph-num" id="panelNum">Niveau 01</span>
+      <span class="ph-name" id="panelName">Débutant</span>
+      <span class="ph-count" id="panelCount"></span>
+      <button class="ph-close" onclick="closePanel()">✕</button>
+    </div>
+    <div class="panel-videos" id="panelVideos"></div>
+  </div>
+
+  <!-- ══ SECTIONS VERROUILLÉES (sous le panel) ══ -->
+  <div id="lockedSections"></div>
+
+  <div class="f-bottom-space"></div>
+
+  <!-- Help -->
+  <div class="f-help">
+    <div>
+      <div class="fh-label">Besoin d'aide ?</div>
+      <div class="fh-title">Un problème avec ta formation ?<br><em>Marine est là pour toi.</em></div>
+    </div>
+    <a href="https://www.instagram.com/_she.nailed.it/" target="_blank" class="btn-help">Contacter Marine sur Instagram →</a>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2026 You Nailed It — Tous droits réservés · <a href="#">Mentions légales</a></p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════
+//  CONFIG VIDÉOS
+//  Remplace les IDs Vimeo par tes vrais IDs
+// ══════════════════════════════════════════
+const VIDEOS = {
+  deb: [
+    { id: 'VIMEO_ID_DEB_01', title: 'Introduction & matériel nécessaire', duration: '12 min' },
+    { id: 'VIMEO_ID_DEB_02', title: 'Hygiène et préparation des ongles',  duration: '8 min'  },
+    { id: 'VIMEO_ID_DEB_03', title: 'Application du gel de base',          duration: '10 min' },
+    { id: 'VIMEO_ID_DEB_04', title: 'Nail art fleurs simples',             duration: '15 min' },
+    { id: 'VIMEO_ID_DEB_05', title: 'Nail art géométrique débutant',       duration: '11 min' },
+    { id: 'VIMEO_ID_DEB_06', title: 'French manucure parfaite',            duration: '13 min' },
+  ],
+  int: [
+    { id: 'VIMEO_ID_INT_01', title: 'Dégradé aquarelle',                   duration: '18 min' },
+    { id: 'VIMEO_ID_INT_02', title: 'Marbling & effets eau',               duration: '20 min' },
+    { id: 'VIMEO_ID_INT_03', title: 'Nail art floral intermédiaire',       duration: '22 min' },
+    { id: 'VIMEO_ID_INT_04', title: 'Poses tendance saison',               duration: '14 min' },
+    { id: 'VIMEO_ID_INT_05', title: 'Effets chrome & mirror',              duration: '16 min' },
+    { id: 'VIMEO_ID_INT_06', title: 'Nail art graphique',                  duration: '19 min' },
+  ],
+  ava: [
+    { id: 'VIMEO_ID_AVA_01', title: 'Nail art 3D volumétrique',            duration: '25 min' },
+    { id: 'VIMEO_ID_AVA_02', title: 'Encapsulation & inclusions',          duration: '28 min' },
+    { id: 'VIMEO_ID_AVA_03', title: 'Effets textures avancées',            duration: '22 min' },
+    { id: 'VIMEO_ID_AVA_04', title: 'Poses couture haute-couture',         duration: '30 min' },
+    { id: 'VIMEO_ID_AVA_05', title: 'Nail art portrait miniature',         duration: '35 min' },
+    { id: 'VIMEO_ID_AVA_06', title: 'Maîtrise freestyle complète',         duration: '40 min' },
+  ],
+};
+
+// ══════════════════════════════════════════
+//  CLÉS D'ACCÈS
+//  URL de succès Stripe à configurer :
+//  → https://younaileditpro.fr/formation.html?access=yn-deb-2026
+//  → https://younaileditpro.fr/formation.html?access=yn-int-2026
+//  → https://younaileditpro.fr/formation.html?access=yn-ava-2026
+//  → https://younaileditpro.fr/formation.html?access=yn-full-2026
+// ══════════════════════════════════════════
+const ACCESS_KEYS = {
+  'yn-deb-2026':  { levels: ['deb'],             packName: 'Niveau Débutant',      title: 'Formation <em>Débutant</em>'    },
+  'yn-int-2026':  { levels: ['int'],             packName: 'Niveau Intermédiaire', title: 'Formation <em>Intermédiaire</em>' },
+  'yn-ava-2026':  { levels: ['ava'],             packName: 'Niveau Avancé',        title: 'Formation <em>Avancée</em>'     },
+  'yn-full-2026': { levels: ['deb','int','ava'], packName: 'Pack Complet',         title: 'Formation <em>Complète</em>'    },
+};
+
+const LEVELS_META = {
+  deb: { num:'Niveau 01', name:'Débutant',      desc:'Les bases du nail art, +25 techniques expliquées étape par étape.',      features:['Hygiène & matériel','Techniques accessibles','+25 nail art','Vidéos HD'],                              price:'200€', link:'https://buy.stripe.com/aFa28s8FY56Vafx7j6gA801' },
+  int: { num:'Niveau 02', name:'Intermédiaire', desc:'Monte en compétences : dégradés, effets tendance et poses élaborées.',    features:['Nail art avancés','Dégradés & effets','Poses tendance','Vidéos HD'],                                 price:'250€', link:'https://buy.stripe.com/dRmaEYg8q6aZ3R99regA802' },
+  ava: { num:'Niveau 03', name:'Avancé',        desc:'Maîtrise complète : nail art 3D, effets premium et poses recherchées.',   features:['Nail art 3D','Effets premium','Poses couture','Vidéos HD'],                                          price:'300€', link:'https://buy.stripe.com/3cIdRa09sgPDfzRdHugA803' },
+};
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let activeLevel = null;
+let unlockedLevels = [];
+
+// ══════════════════════════════════════════
+//  SVG PADLOCKS
+// ══════════════════════════════════════════
+function padlockOpen() {
+  return `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="8" y="24" width="36" height="26" rx="3" fill="#f2c4c4" stroke="#c97070" stroke-width="2"/>
+    <path d="M16 24V16C16 9.4 20.8 4 26 4C29.2 4 32.4 5.8 34.4 9" stroke="#c97070" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <circle cx="26" cy="36" r="4" fill="#c97070"/>
+    <line x1="26" y1="40" x2="26" y2="45" stroke="#c97070" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>`;
+}
+function padlockClosed() {
+  return `<svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="8" y="24" width="36" height="26" rx="3" fill="#e0d0d0" stroke="#b89090" stroke-width="2"/>
+    <path d="M16 24V18C16 11.4 20.8 6 26 6C31.2 6 36 11.4 36 18V24" stroke="#b89090" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <circle cx="26" cy="36" r="4" fill="#b89090"/>
+    <line x1="26" y1="40" x2="26" y2="45" stroke="#b89090" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>`;
+}
+
+// ══════════════════════════════════════════
+//  BUILD CARDS
+// ══════════════════════════════════════════
+function buildCards() {
+  const grid = document.getElementById('cardsGrid');
+  const allLevels = ['deb','int','ava'];
+
+  allLevels.forEach(lvl => {
+    const meta = LEVELS_META[lvl];
+    const isUnlocked = unlockedLevels.includes(lvl);
+    const card = document.createElement('div');
+    card.className = 'lvl-card ' + (isUnlocked ? 'unlocked' : 'locked');
+    card.id = 'card-' + lvl;
+
+    card.innerHTML = `
+      <div class="lvl-card-top ${isUnlocked ? 'unlocked-bg' : 'locked-bg'}">
+        <div class="padlock">${isUnlocked ? padlockOpen() : padlockClosed()}</div>
+        ${isUnlocked ? `<div class="play-hint">▶ Regarder les vidéos</div>` : ''}
+      </div>
+      <div class="lvl-card-label">
+        <div>
+          <div class="lcl-num">${meta.num}</div>
+          <div class="lcl-name">${meta.name}</div>
+        </div>
+        ${isUnlocked ? `<span class="lcl-arrow">›</span>` : `<span style="font-size:.8rem;color:var(--muted)">🔒</span>`}
+      </div>`;
+
+    if (isUnlocked) {
+      card.addEventListener('click', () => togglePanel(lvl, meta));
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+// ══════════════════════════════════════════
+//  PANEL TOGGLE
+// ══════════════════════════════════════════
+function togglePanel(lvl, meta) {
+  const panel = document.getElementById('levelPanel');
+  const wasActive = activeLevel === lvl;
+
+  // Reset all cards
+  document.querySelectorAll('.lvl-card').forEach(c => c.classList.remove('active'));
+
+  if (wasActive) {
+    closePanel();
+    return;
+  }
+
+  // Set active
+  activeLevel = lvl;
+  document.getElementById('card-' + lvl).classList.add('active');
+
+  // Fill panel
+  document.getElementById('panelNum').textContent = meta.num;
+  document.getElementById('panelName').textContent = meta.name;
+  const videos = VIDEOS[lvl];
+  document.getElementById('panelCount').textContent = videos.length + ' vidéos';
+
+  // Build video cards
+  const container = document.getElementById('panelVideos');
+  container.innerHTML = '';
+  videos.forEach((v, i) => {
+    const isReal = v.id && !v.id.startsWith('VIMEO_ID_');
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <div class="video-thumb">
+        ${isReal
+          ? `<iframe src="https://player.vimeo.com/video/${v.id}?badge=0&autopause=0&quality_selector=1&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="${v.title}"></iframe>`
+          : `<div class="video-placeholder"><div class="vp-icon">🎬</div><div class="vp-text">Remplace l'ID Vimeo dans le code</div></div>`}
+      </div>
+      <div class="video-info">
+        <div class="vi-num">Vidéo ${String(i+1).padStart(2,'0')}</div>
+        <div class="vi-title">${v.title}</div>
+        <div class="vi-duration">${v.duration}</div>
+      </div>`;
+    container.appendChild(card);
+  });
+
+  panel.classList.add('visible');
+
+  // Smooth scroll to panel
+  setTimeout(() => {
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
+}
+
+function closePanel() {
+  activeLevel = null;
+  document.getElementById('levelPanel').classList.remove('visible');
+  document.querySelectorAll('.lvl-card').forEach(c => c.classList.remove('active'));
+}
+
+// ══════════════════════════════════════════
+//  BUILD LOCKED SECTIONS
+// ══════════════════════════════════════════
+function buildLockedSections() {
+  const container = document.getElementById('lockedSections');
+  const allLevels = ['deb','int','ava'];
+
+  allLevels.forEach(lvl => {
+    if (unlockedLevels.includes(lvl)) return;
+    const meta = LEVELS_META[lvl];
+    const div = document.createElement('div');
+    div.className = 'locked-section';
+    div.innerHTML = `
+      <div class="locked-icon-big">🔒</div>
+      <div class="locked-label">${meta.num}</div>
+      <div class="locked-name">${meta.name}</div>
+      <p class="locked-desc">${meta.desc}</p>
+      <div class="locked-features">${meta.features.map(f=>`<span class="locked-feature">${f}</span>`).join('')}</div>
+      <a href="${meta.link}" class="btn-unlock">Débloquer ce niveau · ${meta.price} →</a>
+      <p class="locked-price">Ou accède aux <strong>3 niveaux</strong> avec le <a href="https://buy.stripe.com/6oUfZi1dwgPD1J1eLygA804">Pack Complet · 500€</a></p>`;
+    container.appendChild(div);
+  });
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('access');
+  const config = ACCESS_KEYS[key];
+
+  setTimeout(() => document.getElementById('loading').classList.add('hidden'), 300);
+
+  if (!config) {
+    document.getElementById('pageDenied').style.display = 'block';
+    return;
+  }
+
+  unlockedLevels = config.levels;
+  document.getElementById('pageFormation').style.display = 'block';
+  document.getElementById('heroTitle').innerHTML = config.title;
+  document.getElementById('packBadgeName').textContent = config.packName;
+
+  buildCards();
+  buildLockedSections();
+});
+</script>
+</body>
+</html>
